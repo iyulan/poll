@@ -2,4 +2,11 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  questions:
+    title: 'Question title'
+    text: 'Question text'
+    many_answers: 'Question can has many answers'
+
+    add_answer: '[+] Add another answer'
+
+    create_button: 'Create question'

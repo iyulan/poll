@@ -1,0 +1,36 @@
+<h1>Опрос #<%= @question.id %></h1>
+<h3><%= @question.title %></h3>
+<p><i><%= @question.text %></i></p>
+
+<!-- Варианты ответов url: answer_question_path -->
+<%= form_for @question, url: answer_question_path do |f| %>
+
+	<% @question.answers.each do |question_answer| %>
+
+		<%= f.fields_for :answers, question_answer do |answer| %>
+
+			<!-- Если уже отвечал, то результаты, иначе - варианты -->
+			<% if @answered %>
+				<%= answer.label question_answer.text %> <%= question_answer.user_answers.count %>
+				<br>
+			<% else %>
+
+				<% if !@question.many_answers  %>
+					<%= answer.radio_button :text, :selected %>
+				<% else %>
+					<%= answer.check_box :text %>
+				<% end %>
+				<%= answer.label question_answer.text %><br>
+
+			<% end %>
+			
+		<% end %>
+
+	<% end %>
+
+	<%= f.submit "Далее" unless @answered %>
+<% end %>
+
+
+<br>
+<%= link_to 'Назад', questions_path %>

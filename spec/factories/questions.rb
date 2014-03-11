@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :question do
   	text 'В чем смысл жизни?'
+  	title 'Важный вопрос'
   end
 end
