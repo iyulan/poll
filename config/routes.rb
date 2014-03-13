@@ -5,6 +5,7 @@ Poll::Application.routes.draw do
   resources :questions do
     member do
       patch 'answer'
+      get 'chart'
     end
   end
 

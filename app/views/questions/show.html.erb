@@ -10,10 +10,7 @@
 		<%= f.fields_for :answers, question_answer do |answer| %>
 
 			<!-- Если уже отвечал, то результаты, иначе - варианты -->
-			<% if @answered %>
-				<%= answer.label question_answer.text %> <%= question_answer.user_answers.count %>
-				<br>
-			<% else %>
+			<% unless @answered %>
 
 				<% if !@question.many_answers  %>
 					<%= answer.radio_button :text, :selected %>
@@ -28,7 +25,14 @@
 
 	<% end %>
 
-	<%= f.submit "Далее" unless @answered %>
+	<% if @answered %>
+		<div class="chartdiv">
+	  	<%= pie_chart chart_question_path, height: "200px", library: { backgroundColor: "#F5F6F7" } %>
+		</div>
+	<% else %>
+		<%= f.submit "Далее" %>
+	<% end %>
+
 <% end %>
 
 

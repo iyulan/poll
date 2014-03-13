@@ -44,7 +44,7 @@ class QuestionsController < ApplicationController
     variants = params[:question][:answers_attributes].to_hash
     answer_ids = []
     variants.each do |key,value_for_variant|
-      if !value_for_variant['text'].nil?
+      if !value_for_variant['text'].nil? && value_for_variant['text'] != '0'
         answer_ids << value_for_variant['id']
       end
     end
@@ -53,6 +53,12 @@ class QuestionsController < ApplicationController
       answer_ids.each{|id|  UserAnswer.create(answer_id: id, user_ip: request.remote_ip) }
       redirect_to question_path(params[:id])
     end
+  end
+
+  def chart
+    @chart_hash = {}
+    Question.find(params[:id]).answers.map{|a| @chart_hash[a.text] = a.user_answers.count}
+    render :json => @chart_hash
   end
 
   private
