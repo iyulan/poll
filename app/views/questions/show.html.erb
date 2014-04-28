@@ -1,5 +1,11 @@
-<h1>Опрос #<%= @question.id %></h1>
-<h3><%= @question.title %></h3>
+
+<ul class="breadcrumb">
+  <li><a href="/">Главная</a> <span class="divider">/</span></li>
+  <li><a href="/questions">Опросы</a> <span class="divider">/</span></li>
+  <li class="active">Опрос #<%= @question.id %></li>
+</ul>
+
+<h2><%= @question.title %></h2>
 <p><i><%= @question.text %></i></p>
 
 <!-- Варианты ответов url: answer_question_path -->
@@ -12,12 +18,16 @@
 			<!-- Если уже отвечал, то результаты, иначе - варианты -->
 			<% unless @answered %>
 
+				
 				<% if !@question.many_answers  %>
-					<%= answer.radio_button :text, :selected %>
+					<label class="radio">
+						<%= answer.radio_button :text, :selected %> <%= question_answer.text %>
+					</label>
 				<% else %>
-					<%= answer.check_box :text %>
+					<label class="checkbox">
+					<%= answer.check_box :text %> <%= question_answer.text %>
+					</label>
 				<% end %>
-				<%= answer.label question_answer.text %><br>
 
 			<% end %>
 			
@@ -30,11 +40,8 @@
 	  	<%= pie_chart chart_question_path, height: "200px", library: { backgroundColor: "#F5F6F7" } %>
 		</div>
 	<% else %>
-		<%= f.submit "Далее" %>
+		<br><%= f.submit "Голосовать", class: "btn btn-primary btn-small" %>
 	<% end %>
 
 <% end %>
 
-
-<br>
-<%= link_to 'Назад', questions_path %>

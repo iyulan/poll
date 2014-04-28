@@ -1,12 +1,16 @@
-<h1>Опросы</h1>
-<p>Популярные опросы</p>
 
-
-<ul id='menu'>
-<% @questions.each do |question| %>
-	<li><%= link_to question.title, question_path(question) %></li>
-<% end %>
+<ul class="breadcrumb">
+  <li><a href="/">Главная</a> <span class="divider">/</span></li>
+  <li class="active">Опросы</li>
 </ul>
-<br>
 
-<%= link_to 'Новый опрос', new_question_path %> 
+<h2>Популярные опросы</h2>
+			
+<ul>
+	<% @questions.each do |question| %>
+		<li><%= link_to question.title, question_path(question) %></li>
+	<% end %>
+</ul> 
+<%= link_to 'Новый опрос', new_question_path, class: "btn btn-primary btn-small" %>
+
+
