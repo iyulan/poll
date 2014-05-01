@@ -2,12 +2,15 @@ Poll::Application.routes.draw do
 
   root to: 'questions#index'
 
-  resources :questions do
-    member do
-      patch 'answer'
-      get 'chart'
-    end
-  end
+  resources :questions, :except => ['show', 'update', 'destroy']
+
+  patch    'questions/:code/answer' => 'questions#answer', as: :answer_question
+  get    'questions/:code/chart' => 'questions#chart', as: :chart_question
+  get    'questions/search' => 'questions#search', as: :search_questions
+
+  get    'questions/:code' => 'questions#show', as: :question
+  put    'questions/:code' => 'questions#update'
+  delete 'questions/:code' => 'questions#destroy'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

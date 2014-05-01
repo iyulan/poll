@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310122006) do
+ActiveRecord::Schema.define(version: 20140501102804) do
 
   create_table "answers", force: true do |t|
     t.string   "text"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140310122006) do
     t.datetime "updated_at"
     t.boolean  "many_answers", default: false
     t.string   "title"
+    t.string   "code"
   end
 
   create_table "user_answers", force: true do |t|

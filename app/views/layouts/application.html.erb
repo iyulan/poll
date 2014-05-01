@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Опросы</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -18,9 +18,9 @@
 			<div class="navbar navbar-fixed-top">
   			<div class="navbar-inner">
     			<a class="brand" href="/">Опросы</a>
-    			<form class="navbar-search pull-right">
-  					<input type="text" class="search-query" placeholder="Search">
-					</form>
+					<%= form_tag search_questions_path, class: "navbar-search pull-right", method: 'get' do %>
+						<%= text_field_tag :q, params[:q], {class: 'search-query', placeholder: 'Search'} %>
+					<% end %>
   			</div>
 			</div>
 

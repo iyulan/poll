@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.find_by_code(params[:code])
     @answered = @question.has_answer_for?(request.remote_ip)
   rescue ActiveRecord::RecordNotFound
     show_404
@@ -51,14 +51,19 @@ class QuestionsController < ApplicationController
 
     if answer_ids != []
       answer_ids.each{|id|  UserAnswer.create(answer_id: id, user_ip: request.remote_ip) }
-      redirect_to question_path(params[:id])
+      redirect_to question_path(params[:code])
     end
   end
 
   def chart
     @chart_hash = {}
-    Question.find(params[:id]).answers.map{|a| @chart_hash[a.text] = a.user_answers.count}
-    render :json => @chart_hash
+    Question.find_by_code(params[:code]).answers.map{|a| @chart_hash[a.text] = a.user_answers.count}
+    render json: @chart_hash
+  end
+
+  def search
+    @questions = Question.includes(:answers).where('title like ? or questions.text like ? or answers.text like ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%")
+    render :index
   end
 
   private
